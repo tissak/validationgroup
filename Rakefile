@@ -1,22 +1,13 @@
+require 'rubygems'
 require 'rake'
-require 'rake/testtask'
-require 'rake/rdoctask'
+require 'echoe'
 
-desc 'Default: run unit tests.'
-task :default => :test
-
-desc 'Test the validation_group plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
+Echoe.new('validation_group','0.1') do |p|
+  p.description = "Partial validations for models"
+  p.url = "http://github.com/tissak/validationgroup"
+  p.author = "akira"
+  p.ignore_pattern = ["tmp/*","script/*"]
+  p.development_dependencies = []  
 end
 
-desc 'Generate documentation for the validation_group plugin.'
-Rake::RDocTask.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'ValidationGroup'
-  rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
+Dir["#{File.dirname(__FILE__)}/tasks/*.rake"].sort.each { |ext| load ext }
